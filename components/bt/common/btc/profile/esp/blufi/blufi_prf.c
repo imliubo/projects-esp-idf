@@ -366,7 +366,9 @@ void btc_blufi_send_wifi_list(uint16_t apCount, esp_blufi_ap_record_t *list)
     int data_len;
     uint8_t *p;
     // malloc size: (len + RSSI + ssid buffer) * apCount;
-    uint malloc_size = (1 + 1 + sizeof(list->ssid)) * apCount;
+    // uint malloc_size = (1 + 1 + sizeof(list->ssid)) * apCount;
+     // malloc size: (len + authmode+RSSI + ssid buffer) * apCount;
+    uint malloc_size = (1 + 2 + sizeof(list->ssid)) * apCount;
     p = data = osi_malloc(malloc_size);
     if (data == NULL) {
         BTC_TRACE_ERROR("malloc error\n");
@@ -378,12 +380,16 @@ void btc_blufi_send_wifi_list(uint16_t apCount, esp_blufi_ap_record_t *list)
         uint len = strlen((const char *)list[i].ssid);
         data_len = (p - data);
         //current_len + ssid + rssi + total_len_value
-        if((data_len + len + 1 + 1) >  malloc_size) {
+        // if((data_len + len + 1 + 1) >  malloc_size) 
+        //current_len + ssid + rssi+authmode + total_len_value     
+        if((data_len + len + 2 + 1) >  malloc_size) 
+        {
             BTC_TRACE_ERROR("%s len error", __func__);
             osi_free(data);
             return;
         }
-        *p++ = len + 1; // length of ssid + rssi
+        *p++ = len + 2; // length of ssid + rssi + authmode
+        *p++ = list[i].authmode;
         *p++ = list[i].rssi;
         memcpy(p, list[i].ssid, len);
         p = p + len;

@@ -114,6 +114,7 @@ typedef struct {
 typedef struct {
     uint8_t ssid[33];                     /**< SSID of AP */
     int8_t  rssi;                         /**< signal strength of AP */
+    uint8_t authmode;                     /**< auth mode of AP */
 } esp_blufi_ap_record_t;
 
 /// Bluetooth address length
