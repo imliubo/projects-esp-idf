@@ -38,7 +38,7 @@ inline void btc_blufi_cb_to_app(esp_blufi_cb_event_t event, esp_blufi_cb_param_t
 {
     esp_blufi_event_cb_t btc_blufi_cb = (esp_blufi_event_cb_t)btc_profile_cb_get(BTC_PID_BLUFI);
     if (btc_blufi_cb) {
-	btc_blufi_cb(event, param);
+	btc_blufi_cb(event, param, (void*)btc_profile_data_get());
     }
 }
 

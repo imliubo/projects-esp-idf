@@ -20,6 +20,7 @@ esp_err_t esp_blufi_register_callbacks(esp_blufi_callbacks_t *callbacks)
     }
 
     btc_blufi_set_callbacks(callbacks);
+    btc_profile_data_set(callbacks->user_data);
     return (btc_profile_cb_set(BTC_PID_BLUFI, callbacks->event_cb) == 0 ? ESP_OK : ESP_FAIL);
 }
 

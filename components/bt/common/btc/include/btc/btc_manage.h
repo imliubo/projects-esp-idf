@@ -20,4 +20,7 @@ void esp_profile_cb_reset(void);
 int btc_profile_cb_set(btc_pid_t profile_id, void *cb);
 void *btc_profile_cb_get(btc_pid_t profile_id);
 
+int btc_profile_data_set(void *data);
+void *btc_profile_data_get(void);
+
 #endif /* __BTC_MANAGE_H__ */

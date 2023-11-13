@@ -10,6 +10,7 @@
 
 #if BTC_DYNAMIC_MEMORY == FALSE
 void *btc_profile_cb_tab[BTC_PID_NUM] = {};
+void *btc_user_data = NULL;
 #else
 void **btc_profile_cb_tab;
 #endif
@@ -21,6 +22,7 @@ void esp_profile_cb_reset(void)
     for (i = 0; i < BTC_PID_NUM; i++) {
         btc_profile_cb_tab[i] = NULL;
     }
+    btc_user_data = NULL;
 }
 
 int btc_profile_cb_set(btc_pid_t profile_id, void *cb)
@@ -41,4 +43,15 @@ void *btc_profile_cb_get(btc_pid_t profile_id)
     }
 
     return btc_profile_cb_tab[profile_id];
+}
+
+int btc_profile_data_set(void *data)
+{
+    btc_user_data = data;
+    return 0;
+}
+
+void *btc_profile_data_get(void)
+{
+    return btc_user_data;
 }
